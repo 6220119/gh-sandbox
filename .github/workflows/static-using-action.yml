@@ -3,8 +3,8 @@ name: Deploy static content to Pages, using peaceiris/actions-gh-pages
 
 on:
   # Runs on pushes targeting the default branch
-  # push:
-  #   branches: ["main"]
+  push:
+    branches: ["main"]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -27,10 +27,12 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: Make changes
-        run: |
-          echo "Hello World"
-          cp -r dummy-out/* out/
+      - name: Checkout
+        uses: actions/checkout@v4
+      # - name: Make changes
+      #   run: |
+      #     echo "Hello World"
+      #     cp -r dummy-out/* out/
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
         if: ${{ github.ref == 'refs/heads/main' }}
